@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rocket Math</title>
+        <link rel="stylesheet" href="rocketmath.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>The Amazing <i class="fa fa-rocket fa-2x"></i>Math Game</h1>
+        <div id="stripe">
+            <button type="button" id="reset">New Game</button>
+            <span id="message"></span>
+            <button type="button" id="easy">Easy</button>
+            <button type="button" id="hard" class="selected">Hard</button>
+        </div>
+        <div class="" id="inputs">
+            <span class="params">
+                <label for="name">Enter Name </label>
+                <input type="text" id="name" placeholder="Enter name">
+            </span>
+            <span class="params">
+                <label for="operation">Operation</label>
+                <select name="operation" id="opn">
+                    <option value="+" selected>+</option>
+                    <option value="-">−</option>
+                    <option value="*">×</option>
+                    <option value="/">÷</option>
+                </select>
+            </span>
+            <span class="params">
+                <label for="time"> Time </label>
+                <input type="number" min="5" max="60" id="time" placeholder="secs" required>
+            </span>
+            <button type="button" id="run">Lets Go!</button>
+        </div>
+        <div id="container">
+            <!-- <div class="square" id="num1"><p>65</p></div>
+            <div id="sign" class="square" id="sign"><p><strong>+</strong></p></div>
+            <div class="square" id="num2"><p>76</p></div>
+            <div id="sign" class="square"><p><strong>=</strong></p></div>
+            <input type="text" name="" value="141" id="answer" class="square"><span> <i id="status" class="fa fa-check"></i></span> -->
+
+            <ul>
+                <li><span id="num1"></span> <span id="sign"></span> <span  id="num2"></span><input id="answer" type="text" style="visibility:hidden"><span> <i id="status"></i></span></li>
+            </ul>
+        </div>
+        <div id="div-results">
+            <p id="results"></p>
+        </div>
+        <script type="text/javascript" src="rocketmath.js"></script>
+    </body>
+</html>

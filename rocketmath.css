@@ -1,0 +1,157 @@
+body {
+    background-color: #FFFFFF;
+    margin: 0;
+    font-family: "Avenir";
+    font-size: 16px;
+}
+
+.square {
+    width: 5%;
+    /*background: steelblue;*/
+    color: black;
+    /*font-size: 20px;*/
+    font-weight: bold;
+    text-align: center;
+    float: left;
+    /*margin: 1.66%;*/
+    border-radius: 25px;
+}
+
+#sign {
+
+}
+
+.square p {
+    vertical-align: middle;
+}
+
+#stripe {
+    background-color: white;
+    text-align: center;
+    height: 30px;
+    color: black;
+}
+
+#container {
+    max-width: 600px;
+    margin: 20px;
+    padding-left: 35%;
+}
+
+#div-results {
+    max-width: 600px;
+    padding-left: 30%;
+}
+
+#colorDisplay {
+    font-size: 200%;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    background: steelblue;
+    margin: 0;
+    font-weight: normal;
+    /*text-transform: uppercase;*/
+    line-height: 1.1;
+    padding: 20px 0;
+}
+
+.selected {
+        background: steelblue;
+        color: white;
+}
+
+#message {
+    display: inline-block;
+    width: 20%;
+}
+
+button {
+    border: none;
+    background: none;
+    height: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: steelblue;
+    font-size: inherit;
+    letter-spacing: 1px;
+    transition: all 0.5s;
+    outline: none;
+}
+
+button:hover {
+    background: steelblue;
+    color: white;
+}
+
+ul {
+    list-style: none;
+}
+
+/*li {
+    line-height: 10%;
+}*/
+
+input[type="text"], #time, #opn {
+  width: 10%;
+  border: solid 1px #c9c9c9;
+  /*padding: 2px;*/
+  margin: 10px;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: center;
+  -webkit-transition: border 0.3s;
+  -moz-transition: border 0.3s;
+  -o-transition: border 0.3s;
+  transition: border 0.3s;
+}
+
+input[type="text"]:focus, input[type="text"].focus, #time.focus, #time:focus, #opn:focus, #opn.focus {
+  border: solid 5px #969696;
+  outline: 0;
+}
+
+#run.disabled, #run:disabled {
+    background-color: #808080;
+    color: white;
+}
+
+#opn {
+    width: auto;
+}
+
+#inputs {
+    /*max-width: 85%;*/
+    height: 40px;
+    background: none;
+    text-align: center;
+}
+
+#name {
+    width: auto;
+    text-align: left;
+}
+
+#num1, #num2, #sign {
+    display: inline-block;
+    width: 5%;
+}
+
+
+/*.params {
+    display: inline-block;
+    width: 30%;
+}*/
+
+.fa {
+    margin: 18px;
+}
+.fa-check {
+    color: green;
+}
+
+.fa-times {
+    color: red;
+}
