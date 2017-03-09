@@ -1,5 +1,61 @@
 
 
+const EASY = 0,
+      HARD = 1;
+
+var operation = {
+    "+" : add,
+    "-" : subtract,
+    "*" : multiply,
+    "÷" : divide
+};
+
+var randLimit = 50; //Default
+var timeLimit = 20, quesAttempt = 0,
+    corrAnswers = 0, userName = '', sign = '+',
+    difficultyLevel = HARD;
+var startTime, opList, secondsLeft = 0;
+var myTimer;
+
+//FUNCTIONS
+function Timer() {
+    var currTime = new Date();
+    var timeDiff = Math.floor((currTime - startTime)/1000);
+    secondsLeft = timeLimit - timeDiff;
+
+    if (secondsLeft <= 0) {
+        clearInterval(myTimer);
+        //$("#message").text("00:00");
+        $("#message").text("Time's Up!!")
+        $("li #answer").last().prop("disabled", "disabled");
+        $("#run").prop("disabled", "");
+
+        // $("#results").scrollIntoView();
+        $('html, body').animate({
+            scrollTop: $("#results").offset().top
+        }, 1000);
+
+        if (corrAnswers === quesAttempt) {
+            $("#results").text("CONGRATULATIONS " + userName + "!! You answered all " + corrAnswers.toString() + " questions correctly!! Well done!!");
+        } else {
+            $("#results").text("UH-OH " + userName + "!! You only answered " + corrAnswers.toString() + " out of " + quesAttempt.toString() + " questions correctly. Keep at it!!");
+        }
+        // $("#corrAns").text(corrAnswers.toString());
+        // $("#quesAttempt").text(quesAttempt.toString());
+
+    } else {
+        if (secondsLeft < 10) {
+            $("#message").text("00:0"+secondsLeft.toString());
+        } else {
+            $("#message").text("00:"+secondsLeft.toString());
+        }
+    }
+}
+
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
 function add(op1, op2) {
     return (op1 + op2);
 }
@@ -16,58 +72,46 @@ function divide(op1, op2) {
     return (round(op1/op2, 2));
 }
 
-const EASY = 0,
-      HARD = 1;
-
-var operation = {
-    "+" : add,
-    "-" : subtract,
-    "*" : multiply,
-    "÷" : divide
-};
-
-var randLimit = 10; //Default
-var timeLimit = 20, quesAttempt = 0,
-    corrAnswers = 0, userName = '', sign = '+',
-    difficultyLevel = HARD;
-var startTime, secondsLeft = 0;
-var myTimer;
-
-//FUNCTIONS
-function Timer() {
-    var currTime = new Date();
-    var timeDiff = Math.floor((currTime - startTime)/1000);
-    secondsLeft = timeLimit - timeDiff;
-
-    if (secondsLeft <= 0) {
-        clearInterval(myTimer);
-        //$("#message").text("00:00");
-        $("#message").text("Time's Up!!")
-        $("li #answer").last().prop("disabled", "disabled");
-        $("#run").prop("disabled", "");
-
-        if (corrAnswers === quesAttempt) {
-            $("#results").text("CONGRATULATIONS " + userName + "!! You answered all " + corrAnswers.toString() + " out of " + quesAttempt.toString() + " questions correctly!! Well done!!");
-        } else {
-            $("#results").text("UH-OH " + userName + "!! You only answered " + corrAnswers.toString() + " out of " + quesAttempt.toString() + " questions correctly. Keep at it!!");
-        }
-        // $("#corrAns").text(corrAnswers.toString());
-        // $("#quesAttempt").text(quesAttempt.toString());
-
-    } else {
-        if (secondsLeft < 10) {
-            $("#message").text("00:0"+secondsLeft.toString());
-        } else {
-            $("#message").text("00:"+secondsLeft.toString());
-        }
+function isDupe(op1, op2, opPairs) {
+// Check if exists in Set. If exists, return True.
+// If not exists, add to Set. Return False.
+    if (opPairs.has(JSON.stringify([op1, op2]))) {
+        // Dupe found.
+        console.log("Dupe found - " + op1.toString() + ", " + op2.toString());
+        return true;
+    }
+    else {
+        //New pair.
+        console.log("New pair - " + op1.toString() + ", " + op2.toString());
+        opPairs.add(JSON.stringify([op1, op2]));
+        return false;
     }
 }
 
 function generateNumbers() {
+
     op1 = Math.floor(Math.random() * randLimit);
     op2 = Math.floor(Math.random() * randLimit);
 
-    return {op1: op1, op2: op2};
+    // For EASY setting, ensure subtraction and division have +ve, >1
+    // answers respectively.
+    if ((op1 < op2) && difficultyLevel === EASY) {
+        //Swap variables
+        [op1, op2] = [op2, op1];
+    }
+
+    // Check for 0 for division
+    if (op2 === 0 && sign === '/') {
+        console.log("0 found for op2 ... skipping");
+        return(generateNumbers());
+    }
+
+    // Check for dupes.
+    if (isDupe(op1, op2, opList)) {
+        return(generateNumbers());
+    } else {
+        return {op1: op1, op2: op2};
+    }
 }
 
 function setDifficultyParams(diffLevel) {
@@ -98,6 +142,8 @@ function resetRun() {
     quesAttempt = 0;
     corrAnswers = 0;
     secondsLeft = 0;
+    opList = new Set();
+
     clearInterval(myTimer);
     myTimer = 0;
     $("#message").text("");
