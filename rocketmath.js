@@ -93,6 +93,17 @@ function generateNumbers() {
     op1 = Math.floor(Math.random() * randLimit);
     op2 = Math.floor(Math.random() * randLimit);
 
+    // Generate -ve number
+    if (difficultyLevel === HARD) {
+        // 0 --> -ve, 1 --> +ve
+        if (Math.round(Math.random() * 1) === 0) {
+            op1 = -op1;
+        }
+        if (Math.round(Math.random() * 1) === 0) {
+            op2 = -op2;
+        }
+    }
+
     // For EASY setting, ensure subtraction and division have +ve, >1
     // answers respectively.
     if ((op1 < op2) && difficultyLevel === EASY) {
@@ -202,8 +213,18 @@ $("#run").on("click", function(){
     // $("li #num1").last().text(numbers.op1);
     // $("li #num2").last().text(numbers.op2);
     // $("li #sign").last().text(sign);
+    num1String = "<span id='num1'>" + numbers.op1 + "</span> ";
+    num2String = "<span  id='num2'>" + numbers.op2 + "</span> ";
 
-    var htmlString = "<li><span id='num1'>" + numbers.op1 + "</span> <span id='sign'>" + sign + "</span> <span  id='num2'>" + numbers.op2 + "</span> = <input id='answer' type='text'><span> <i id='status'></i></span></li>";
+    if (numbers.op1 < 0)
+        num1String = "(<span id='num1'>" + numbers.op1 + "</span>) ";
+
+    if (numbers.op2 < 0)
+        num2String = "(<span  id='num2'>" + numbers.op2 + "</span>) ";
+
+    var htmlString = "<li>" + num1String + " <span id='sign'>" + sign + "</span>" + num2String + " <span id='equalsSign'>=</span> <input id='answer' type='text'><span> <i id='status'></i></span></li>";
+
+    // var htmlString = "<li><span id='num1'>" + numbers.op1 + "</span> <span id='sign'>" + sign + "</span> <span  id='num2'>" + numbers.op2 + "</span> = <input id='answer' type='text'><span> <i id='status'></i></span></li>";
 
     // $("ul").append(htmlString);
     $("ul").html(htmlString);
@@ -243,7 +264,20 @@ $("ul").on("keypress", "input[type='text']", (function(event) {
         //Create a new li and add to ol only if more than 1s is left.
         // if (secondsLeft >= 1) {
             var newNumbers = generateNumbers();
-            var htmlString = "<li><span id='num1'>" + newNumbers.op1 + "</span> <span id='sign'>" + sign + "</span> <span  id='num2'>" + newNumbers.op2 + "</span> = <input id='answer' type='text'><span> <i id='status'></i></span></li>";
+
+            num1String = "<span id='num1'>" + newNumbers.op1 + "</span> ";
+            num2String = "<span  id='num2'>" + newNumbers.op2 + "</span> ";
+
+            if (newNumbers.op1 < 0)
+                num1String = "(<span id='num1'>" + newNumbers.op1 + "</span>) ";
+
+            if (newNumbers.op2 < 0)
+                num2String = "(<span  id='num2'>" + newNumbers.op2 + "</span>) ";
+
+            var htmlString = "<li>" + num1String + " <span id='sign'>" + sign + "</span>" + num2String + " <span id='equalsSign'>=</span> <input id='answer' type='text'><span> <i id='status'></i></span></li>";
+
+
+            // var htmlString = "<li><span id='num1'>" + newNumbers.op1 + "</span> <span id='sign'>" + sign + "</span> <span  id='num2'>" + newNumbers.op2 + "</span> = <input id='answer' type='text'><span> <i id='status'></i></span></li>";
             $("ul").append(htmlString);
 
             $("li #answer").last().focus();
